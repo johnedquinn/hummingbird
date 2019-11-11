@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 
-class _movie_database:
+class server:
 
 	def __init__(self):
 		self.movies = {}
-		self.users = {}
-		self.ratings = {}
-		self.posters = {}
 
 	def load_movies(self, movie_file):
 		self.movies = {}
