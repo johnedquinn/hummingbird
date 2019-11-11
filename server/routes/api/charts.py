@@ -1,23 +1,35 @@
-#incomplete code
-#movies.py
+#####
+# @file : charts.py
+# @desc : API route for charts
+# @author : TBD
+#####
 
+# IMPORTS
 import cherrypy
 import json
-from ../../server import server
+from ..database import database
 
+# @class : ChartsController
+# @desc  : route for charts
 class ChartsController(object):
 
-    # @name : INIT
+    # @name : __init__
     # @desc : Constructor
-    def __init__(self, mdb=None):
-        if mdb is None:
-            self.mdb = _movie_database()
+    def __init__(self, db=None):
+        if db is None:
+            self.db = database()
         else:
-            self.mdb = mdb
-
-        self.mdb.load_movies('ml-1m/movies.dat')
-        self.mdb.load_posters('ml-1m/images.dat') 
-
+            self.db = db
+        self.db.load_charts()
+        
+    # @name : GET_CHARTS
+    # @desc : Gets all charts from the database
+    def GET_CHARTS(self):
+        output = { 'result': 'success' }
+        return json.dumps(output)
+        
+        
+'''
     # @name : GET_MOVIE
     # @desc : Gets movie using MID
     def GET_MOVIE(self, mid):
@@ -127,8 +139,10 @@ class ChartsController(object):
             output['result'] = 'error'
             output['message'] = str(ex)
         return json.dumps(output)
+'''
 
-
+# @name : main
+# @desc : main driver for file
 if __name__ == '__main__':
-    mc = MovieController()
-    mc.GET_MOVIES()
+    cc = ChartsController()
+    cc.GET_CHARTS()
