@@ -57,10 +57,13 @@ class database:
 
 	# @name : load_todays_movers
 	# @desc : uses the YahooFinance API to load today's top movers
-	def load__movers(self):
+	def load_movers(self):
 		self.movers = {}
-		response = requests.request('GET', self.MOVERS_URL, headers=self.RAPID_HEADERS, params=self.movers_params())
-		print(response.text) # @TODO : don't just print
+		try:
+			response = requests.request('GET', self.MOVERS_URL, headers=self.RAPID_HEADERS, params=self.movers_params())
+		except Exception as ex:
+			response = {}
+		self.movers = response
   
 	# @name : load_chart
 	# @desc : uses the YahooFinance API to load charts
@@ -72,8 +75,20 @@ class database:
 	# @desc : uses the YahooFinance API to load charts
 	# @TODO : determine how to load several charts, also get rid of BAC
 	def load_charts(self):
+		self.charts = {}
 		response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params('BAC'))
 		print(response.text) # @TODO : don't just print
+
+	# @name  : load_quotes
+	# @desc  : uses the YahooFinance API to load quotes
+	# @param : symbols = formatted string (ex: 'BAC,GOOGL,TSLA,MSFT')
+	def load_quotes(self, symbols):
+		self.quotes = {}
+		try:
+			response = requests.request('GET', self.QUOTES_URL, headers=self.RAPID_HEADERS, params=self.quotes_params(symbols))
+		except Exception as ex:
+			response = {}
+		self.quotes = response
 
 # @name : main
 # @desc : main driver for file
