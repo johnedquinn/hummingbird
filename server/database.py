@@ -13,7 +13,9 @@ class database:
     
     # CONSTANTS
 	RAPID_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/market'
+	STOCK_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com/stock'
 	CHARTS_URL = RAPID_URL + '/get-charts'
+	CHART_URL = STOCK_URL + '/v2/get-chart'
 	QUOTES_URL = RAPID_URL + '/get-quotes'
 	MOVERS_URL = RAPID_URL + '/get-movers'
 	RAPID_HOST = 'apidojo-yahoo-finance-v1.p.rapidapi.com'
@@ -39,14 +41,13 @@ class database:
 	# @name : charts_params
 	# @desc : return the params for the get-charts request
 	# @param : symbol = string (ex: 'MSFT')
-	def charts_params(self, symbol):
+	def charts_params(self, symbol, interval, rg):
 		return {
-			"comparisons": "^GDAXI,^FCHI",
 			"region": "US",
 			"lang": "en",
 			"symbol": symbol,
-			"interval": "5m",
-			"range": "1d"
+			"interval": interval,
+			"range": rg
 		}
   
 	# @name  : quotes_params
@@ -67,17 +68,21 @@ class database:
   
 	# @name : load_chart
 	# @desc : uses the YahooFinance API to load charts
-	def load_chart(self, symbol):
-		response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params(symbol))
-		print(response.text) # @TODO : don't just print
+	def load_chart(self, symbol, interval, rg):
+		try:
+			response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params(symbol, interval, rg))
+		except Exception as ex:
+			return None
+		self.charts[symbol] = response.json()
 
 	# @name : load_charts
 	# @desc : uses the YahooFinance API to load charts
 	# @TODO : determine how to load several charts, also get rid of BAC
-	def load_charts(self):
+	'''def load_charts(self):
 		self.charts = {}
 		response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params('BAC'))
 		print(response.text) # @TODO : don't just print
+		self.charts = response.json()''' 
 
 	# @name  : load_quotes
 	# @desc  : uses the YahooFinance API to load quotes
@@ -89,6 +94,25 @@ class database:
 		except Exception as ex:
 			response = {}
 		self.quotes = response
+  
+	# @name  : get_quote
+	# @desc  : uses the YahooFinance API to load quotes
+	def get_quote(self, symbol):
+		if (symbol in self.quotes):
+			return self.quotes[symbol]
+		else:
+			try:
+				response = requests.request('GET', self.QUOTES_URL, headers=self.RAPID_HEADERS, params=self.quotes_params(symbol))
+				self.quotes[symbol] = response
+				return self.quotes[symbol]
+			except Exception as ex:
+				return None
+		return None
+  
+	# @name  : get_quotes
+	# @desc  : uses the YahooFinance API to load quotes
+	def get_quotes(self):
+		return self.quotes
 
 # @name : main
 # @desc : main driver for file

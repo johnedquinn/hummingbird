@@ -24,14 +24,30 @@ class ChartsController(object):
         
     # @name : GET_CHARTS
     # @desc : Gets all charts from the database
-    def GET_CHARTS(self):
+    '''def GET_CHARTS(self):
         output = { 'result': 'success' }
-        return json.dumps(output)
+        return json.dumps(output)'''
         
     # @name : GET_CHART
     # @desc : Get chart by symbol
-    def GET_CHART(self, symbol):
+    def GET_CHART(self, symbol, interval, rg):
         output = { 'result': 'success' }
+         try:
+            chart = self.mdb.load_chart(symbol, interval, rg)
+            chart = chart['chart']['result'][0]
+            indicators = chart['indicators']['quote'][0]
+            if movie is not None:
+                output['currentTradingPeriod'] = chart['meta']['currentTradingPeriod']
+                output['timestamp']            = chart['timestamp']
+                output['volume']               = indicators['volume']
+                output['close']                = indicators['close']
+                output['open']                 = indicators['open']
+            else:
+                output['result'] = 'error'
+                output['message'] = 'chart not found'
+        except Exception as ex:
+            output['result'] = 'error'
+            output['message'] = str(ex)
         return json.dumps(output)
         
 '''
@@ -150,4 +166,4 @@ class ChartsController(object):
 # @desc : main driver for file
 if __name__ == '__main__':
     cc = ChartsController()
-    cc.GET_CHARTS()
+    cc.GET_CHART()

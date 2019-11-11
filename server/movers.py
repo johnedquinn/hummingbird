@@ -26,4 +26,9 @@ class MoversController(object):
     # @desc : Gets all charts from the database
     def GET_MOVERS(self):
         output = { 'result': 'success' }
+        try:
+            movers = self.db.get_movers()
+            output['movers'] = movers
+        except Exception as ex:
+            output['result'] = 'error'
         return json.dumps(output)
