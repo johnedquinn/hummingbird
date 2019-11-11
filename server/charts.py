@@ -28,6 +28,11 @@ class ChartsController(object):
         output = { 'result': 'success' }
         return json.dumps(output)
         
+    # @name : GET_CHART
+    # @desc : Get chart by symbol
+    def GET_CHART(self, symbol):
+        output = { 'result': 'success' }
+        return json.dumps(output)
         
 '''
     # @name : GET_MOVIE

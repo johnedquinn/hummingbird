@@ -59,13 +59,20 @@ class database:
 	# @desc : uses the YahooFinance API to load today's top movers
 	def load__movers(self):
 		self.movers = {}
-		response = requests.request('GET', MOVERS_URL, headers=RAPID_HEADERS, params=self.movers_params())
+		response = requests.request('GET', self.MOVERS_URL, headers=self.RAPID_HEADERS, params=self.movers_params())
 		print(response.text) # @TODO : don't just print
   
 	# @name : load_chart
 	# @desc : uses the YahooFinance API to load charts
 	def load_chart(self, symbol):
-		response = requests.request('GET', CHARTS_URL, headers=RAPID_HEADERS, params=self.charts_params(symbol))
+		response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params(symbol))
+		print(response.text) # @TODO : don't just print
+
+	# @name : load_charts
+	# @desc : uses the YahooFinance API to load charts
+	# @TODO : determine how to load several charts, also get rid of BAC
+	def load_charts(self):
+		response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params('BAC'))
 		print(response.text) # @TODO : don't just print
 
 # @name : main

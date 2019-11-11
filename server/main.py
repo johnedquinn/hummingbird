@@ -21,6 +21,7 @@ def start_service():
 
 	# Connect the routes
 	dispatcher.connect('c_get_charts', '/charts/', controller=chartsController, action='GET_CHARTS', conditions=dict(method=['GET']))
+	dispatcher.connect('c_get_chart', '/charts/:symbol', controller=chartsController, action='GET_CHART', conditions=dict(method=['GET']))
  
 	# Server configuration
 	conf = {
