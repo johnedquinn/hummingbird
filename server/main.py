@@ -7,7 +7,7 @@
 
 # IMPORTS
 import cherrypy
-from routes.api.charts import ChartsController
+from charts import ChartsController
 from database import database
 
 # @name : start_service

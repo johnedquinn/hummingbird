@@ -7,7 +7,7 @@
 # IMPORTS
 import cherrypy
 import json
-from ..database import database
+from database import database
 
 # @class : ChartsController
 # @desc  : route for charts
