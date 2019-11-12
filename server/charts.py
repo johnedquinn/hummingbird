@@ -22,12 +22,6 @@ class ChartsController(object):
             self.db = db
         self.db.load_charts()
         
-    # @name : GET_CHARTS
-    # @desc : Gets all charts from the database
-    '''def GET_CHARTS(self):
-        output = { 'result': 'success' }
-        return json.dumps(output)'''
-        
     # @name : GET_CHART
     # @desc : Get chart by symbol
     def GET_CHART(self, symbol, interval, rg):
