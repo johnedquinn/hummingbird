@@ -28,5 +28,9 @@ class TestCharts(unittest.TestCase):
         r = requests.get(self.MOVERS_URL)
         self.assertTrue(self.is_json(r.content.decode('utf-8')))
         resp = json.loads(r.content.decode('utf-8'))
+        print(resp)
         self.assertEqual(len(resp['movers']), 3)
         self.assertEqual(resp['result'], 'success')
+
+if __name__ == '__main__':
+  unittest.main()

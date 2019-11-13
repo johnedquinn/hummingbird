@@ -62,7 +62,7 @@ class database:
         self.movers = []
         try:
             response = requests.request('GET', self.MOVERS_URL, headers=self.RAPID_HEADERS, params=self.movers_params())
-            self.movers = response['result']
+            self.movers = response.json()['finance']['result']
         except Exception as ex:
             self.movers = []
             print(str(ex))
@@ -71,10 +71,11 @@ class database:
     # @desc : uses the YahooFinance API to load charts
     def load_chart(self, symbol, interval, rg):
         try:
-            response = requests.request('GET', self.CHARTS_URL, headers=self.RAPID_HEADERS, params=self.charts_params(symbol, interval, rg))
+            response = requests.request('GET', self.CHART_URL, headers=self.RAPID_HEADERS, params=self.charts_params(symbol, interval, rg))
+
         except Exception as ex:
             return None
-        self.charts[symbol] = data
+        self.charts[symbol] = response.json()
 
     # @name  : load_quotes
     # @desc  : uses the YahooFinance API to load quotes
@@ -85,7 +86,7 @@ class database:
             response = requests.request('GET', self.QUOTES_URL, headers=self.RAPID_HEADERS, params=self.quotes_params(symbols))
         except Exception as ex:
             response = {}
-        self.quotes = response
+        self.quotes = response.json()
   
     # @name  : load_users
     # @desc  : loads the users from the data/users.dat file
@@ -125,7 +126,7 @@ class database:
         else:
             try:
                 response = requests.request('GET', self.QUOTES_URL, headers=self.RAPID_HEADERS, params=self.quotes_params(symbol))
-                self.quotes[symbol] = response['quoteResponse']['result'][0]
+                self.quotes[symbol] = response.json()['quoteResponse']['result'][0]
                 return self.quotes[symbol]
             except Exception as ex:
                 return None
