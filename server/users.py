@@ -35,11 +35,11 @@ class UsersController(object):
 
     # @name : GET_USER
     # @desc : Get a single user
-    def GET_USER(self,id):
+    def GET_USER(self , uid):
         output = {'result': 'success'}
         try:
-            user = self.db.get_user(id)
-            output['id'] = id
+            user = self.db.get_user(uid)
+            output['id'] = uid
             output['name'] = user['name']
             output['email'] = user['email']
             output['stocks'] = user['stocks']
@@ -48,7 +48,7 @@ class UsersController(object):
         return json.dumps(output)
     
     # @name : POST_USER
-    # @desc : Add/edit user
+    # @desc : Add user
     # @body : user passes in { name, email, password, stocks }
     def POST_USER(self):
         data = cherrypy.request.body.read()
@@ -58,23 +58,36 @@ class UsersController(object):
         except Exception as ex:
             # @TODO
         return json.dumps(output)
+
+    # @name : PUT_USER
+    # @desc : Update  a user 
+    # @body : {uid, name, email, password, stocks} 
+    def PUT_USER(self):
+	data = cherrypy.request.body.read()
+	data = json.loads(data)
+	try: 	
+    
         
     # @name : DELETE_USER
     # @desc : Delete a single user 
-    def DELETE_USER(self,id):
+    def DELETE_USER(self,uid):
         output = {'result': 'success'}
         try: 
-            self.db.delete_user(id)
+            self.db.delete_user(uid)
         except Exception as ex:
             output['result'] = 'error'
         return json.dumps(output)
 
     # @name : DELETE_STOCK
     # @desc : Delete a single stock
-    def DELETE_STOCK(self,stock):
+    # @body : user passes in body {stock}
+    '''def DELETE_STOCK(self, uid):
+	data = cherrypy.request.body.read()
+	data = json.loads(data)
+	stock = data['stock']
         output = {'result': 'success'}
         try: 
-            self.db.delete_stock(stock)
+            self.db.delete_stock(uid, stock)
         except Exception as ex:
             output['result'] = 'error'
-        return json.dumps(output)
+        return json.dumps(output)'''

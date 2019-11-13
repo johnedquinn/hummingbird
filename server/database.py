@@ -95,7 +95,7 @@ class database:
 			# Split the components
 			line = line.rstrip()
 			components = line.split('::')
-			id = int(components[0])
+			uid = int(components[0])
 			name = components[1]
 			email = components[2]
 			password = components[3]
@@ -107,7 +107,7 @@ class database:
 				eltComponents = elt.split(':')
 				stocks[eltComponents[0]] = int(eltComponents[1])
 			# Insert into users dictionary
-			self.users[id] = {
+			self.users[uid] = {
 				'name': name,
 				'email': email,
 				'password': password,
@@ -142,12 +142,21 @@ class database:
 
 	# @name  : get_user
 	# @desc  : return the user
-	def get_user(self, id):
-		id = int(id)
-		if id in self.users.keys():
+	def get_user(self, uid):
+		uid = int(uid)
+		if uid in self.users.keys():
 			return self.users[id]
 		else:
 			return None
+	# @name : set_user
+	# @desc : set a user's variables 
+	def set_user(self, uid, name, email, password, stocks):
+		uid = int(uid)
+		self.users[uid] = {
+			'name': name,
+			'email': email,
+			'password': password,
+			'stocks': stocks }
 
 	# @name  : get_users
 	# @desc  : return the user
@@ -156,13 +165,21 @@ class database:
 	
 	# @name : delete_user
 	# @desc : delete a specific user 
-	def delete_user(self,id):
-		self.users.pop(id,None)
+	def delete_user(self,uid):
+		self.users.pop(uid,None)
 
 	# @name : delete_user
 	# @desc : delete a specific user 
-	def delete_stock(self,stock):
-		return self.users['stocks'].pop(stock,None)
+	def delete_stock(self, uid, stock):
+		return self.users[uid]['stocks'].pop(stock,None)
+
+	# @name : set_stocks
+	# @desc : set a specific stock
+	def set_stock(self, uid, stock, amt):
+		if amt == 0:
+			self.delete_stock(uid, stock)
+		else:
+			self.users[uid]['stocks'][stock] = amt 
 			
 
 # @name : main
