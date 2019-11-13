@@ -1,6 +1,6 @@
 #####
 # @file : users.py
-# @desc : API route for quotes
+# @desc : API route for users
 # @author : TBD
 #####
 
@@ -20,7 +20,7 @@ class UsersController(object):
             self.db = database()
         else:
             self.db = db
-        self.db.load_users()
+        self.db.load_users('data/users.dat')
         
     # @name : GET_USERS
     # @desc : Gets all users
@@ -51,21 +51,36 @@ class UsersController(object):
     # @desc : Add user
     # @body : user passes in { name, email, password, stocks }
     def POST_USER(self):
+        output = {'result': 'success'}
         data = cherrypy.request.body.read()
         data = json.loads(data)
+        totalUsers = len(self.db.users)
         try:
-            # @TODO
+            output['id'] = totalUsers + 1
+            output['name'] = data['name']
+            output['email'] = data['email']
+            output['stocks'] = data['stocks']
+            set_user(totalUsers+1, data['name'], data['email'], data['password'], data['stocks'])
         except Exception as ex:
-            # @TODO
+            output['result'] = 'error'
         return json.dumps(output)
 
     # @name : PUT_USER
     # @desc : Update  a user 
     # @body : {uid, name, email, password, stocks} 
     def PUT_USER(self):
-	data = cherrypy.request.body.read()
-	data = json.loads(data)
-	try: 	
+        output = {'result': 'success'}
+        data = cherrypy.request.body.read()
+        data = json.loads(data)
+        uid = data['uid']
+        try: 
+            if uid not in self.db.users:
+                set_user(data['uid'], data['name'], data['email'], data['password'], data['stocks'])
+            else:
+                output['result'] = 'user not found'
+        except Exception as ex: 
+            output['result'] = 'error'
+        return json.dumps(output)
     
         
     # @name : DELETE_USER
@@ -78,13 +93,29 @@ class UsersController(object):
             output['result'] = 'error'
         return json.dumps(output)
 
+    # @name : POST_STOCK 
+    # @desc : update a stock 
+    # @body : {uid, stock, amt}
+    def POST_STOCK(self):
+        output = {'result': 'success'}
+        data = cherrypy.request.body.read()
+        data = json.loads(data)
+        try: 
+            uid = data['uid']
+            output['stock'] = data['stock']
+            output['amt'] = data['amt']
+            set_stock(uid,stock,amt)
+        except Exception as ex: 
+            output['result'] = 'error'
+        return json.dumps(output)
+
     # @name : DELETE_STOCK
     # @desc : Delete a single stock
     # @body : user passes in body {stock}
     '''def DELETE_STOCK(self, uid):
-	data = cherrypy.request.body.read()
-	data = json.loads(data)
-	stock = data['stock']
+    data = cherrypy.request.body.read()
+    data = json.loads(data)
+    stock = data['stock']
         output = {'result': 'success'}
         try: 
             self.db.delete_stock(uid, stock)

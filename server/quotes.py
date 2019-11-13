@@ -9,9 +9,9 @@ import cherrypy
 import json
 from database import database
 
-# @class : ChartsController
-# @desc  : route for charts
-class ChartsController(object):
+# @class : QuotesController
+# @desc  : route for quotes
+class QuotesController(object):
 
     # @name : __init__
     # @desc : Constructor
@@ -20,7 +20,6 @@ class ChartsController(object):
             self.db = database()
         else:
             self.db = db
-        self.db.load_charts()
         
     # @name : GET_QUOTE
     # @desc : Gets a quote from the database
@@ -35,7 +34,7 @@ class ChartsController(object):
                 output['message'] = 'Quote not found'
         except Exception as ex:
             output['result'] = 'error'
-            output['message'] = 'GET_QUOTE: Exception thrown.'
+            output['message'] = str(ex)
         return output
 
     # @name : GET_QUOTES
@@ -47,4 +46,5 @@ class ChartsController(object):
             output['quotes'] = quotes
         except Exception as ex:
             output['result'] = 'success'
+            output['message'] = str(ex)
         return output

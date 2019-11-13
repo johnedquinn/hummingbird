@@ -20,17 +20,26 @@ class ChartsController(object):
             self.db = database()
         else:
             self.db = db
-        self.db.load_charts()
         
     # @name : GET_CHART
     # @desc : Get chart by symbol
-    def GET_CHART(self, symbol, interval, rg):
+    def GET_CHART(self, symbol):
+        data = cherrypy.request.body.read()
+        data = json.loads(data)
+        if data['interval'] is not None:
+            interval = data['interval']
+        else:
+            interval = '1d'
+        if data['rg'] is not None:
+            rg = data['rg']
+        else:
+            rg = '5m'
         output = { 'result': 'success' }
-         try:
-            chart = self.mdb.load_chart(symbol, interval, rg)
+        try:
+            chart = self.db.load_chart(symbol, interval, rg)
             chart = chart['chart']['result'][0]
             indicators = chart['indicators']['quote'][0]
-            if movie is not None:
+            if chart is not None:
                 output['currentTradingPeriod'] = chart['meta']['currentTradingPeriod']
                 output['timestamp']            = chart['timestamp']
                 output['volume']               = indicators['volume']
@@ -119,7 +128,7 @@ class ChartsController(object):
         output = {'result' : 'success'}
         data = cherrypy.request.body.read()
         data = json.loads(data)
-		# Try to update movie
+        # Try to update movie
         try:
             movies = list(self.mdb.get_movies())
             mid = int(movies[-1]) + 1
@@ -130,7 +139,7 @@ class ChartsController(object):
             output['result'] = 'error'
             output['message'] = str(ex)
         return json.dumps(output)
-		
+        
     # @name : POST_MOVIE
     # @desc : Adds a new movie to the movies dictionary
     def DELETE_MOVIE(self, mid):
