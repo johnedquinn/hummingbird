@@ -33,7 +33,7 @@ def start_service():
     dispatcher.connect('q_get_quote', '/quotes/:symbol', controller=quotesController, action='GET_QUOTE', conditions=dict(method=['GET']))
     dispatcher.connect('q_get_quotes', '/quotes/', controller=quotesController, action='GET_QUOTES', conditions=dict(method=['GET']))
     dispatcher.connect('u_get_users', '/users/', controller=usersController, action='GET_USERS', conditions=dict(method=['GET']))
-    dispatcher.connect('u_get_user/:uid', '/users/', controller=usersController, action='GET_USER', conditions=dict(method=['GET']))
+    dispatcher.connect('u_get_user', '/users/:uid', controller=usersController, action='GET_USER', conditions=dict(method=['GET']))
     dispatcher.connect('u_post_user', '/users/', controller=usersController, action='POST_USER', conditions=dict(method=['POST']))
     dispatcher.connect('u_put_user', '/users/', controller=usersController, action='PUT_USER', conditions=dict(method=['PUT']))
     dispatcher.connect('u_delete_user', '/users/:uid', controller=usersController, action='DELETE_USER', conditions=dict(method=['DELETE']))

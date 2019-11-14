@@ -90,9 +90,9 @@ class database:
   
     # @name  : load_users
     # @desc  : loads the users from the data/users.dat file
-    def load_users(self, file):
+    def load_users(self, f):
         self.users = {}
-        f = open(file)
+        f = open(f)
         for line in f:
             # Split the components
             line = line.rstrip()

@@ -6,6 +6,7 @@ class TestUsers(unittest.TestCase):
 
     SITE_URL = 'http://student04.cse.nd.edu:51075' #replace with your port number
 
+    USERS_URL = SITE_URL + "/users/" #replace with your port number
     # def reset_data(self):
     # 	m = {}
     # 	r = requests.put(self.RESET_URL, data = json.dumps(m))
@@ -21,7 +22,8 @@ class TestUsers(unittest.TestCase):
         # self.reset_data()
         user_id = 2
         r = requests.get(self.USERS_URL + str(user_id))
-        self.assertTrue(self.is_json(r.content.decode()))
+        print(r.content.decode('utf-8'))
+        self.assertTrue(self.is_json(r.content.decode('utf-8')))
         resp = json.loads(r.content.decode())
         self.assertEqual(resp['name'], 'Steffi Keene')
         self.assertEqual(resp['email'], 'skeene@nd.edu')

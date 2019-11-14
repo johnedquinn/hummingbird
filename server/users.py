@@ -36,15 +36,19 @@ class UsersController(object):
     # @name : GET_USER
     # @desc : Get a single user
     def GET_USER(self , uid):
+        uid = int(uid)
         output = {'result': 'success'}
+        print("@@@ GET_USER")
         try:
             user = self.db.get_user(uid)
+            print(user)
             output['id'] = uid
             output['name'] = user['name']
             output['email'] = user['email']
             output['stocks'] = user['stocks']
         except Exception as ex:
             output['result'] = 'error'
+            output['message'] = str(ex)         		
         return json.dumps(output)
     
     # @name : POST_USER
