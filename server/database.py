@@ -72,10 +72,10 @@ class database:
     def load_chart(self, symbol, interval, rg):
         try:
             response = requests.request('GET', self.CHART_URL, headers=self.RAPID_HEADERS, params=self.charts_params(symbol, interval, rg))
-            print(response.json())
         except Exception as ex:
             return None
         self.charts[symbol] = response.json()
+        return(self.charts[symbol])
 
     # @name  : load_quotes
     # @desc  : uses the YahooFinance API to load quotes

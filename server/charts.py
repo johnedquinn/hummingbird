@@ -24,16 +24,16 @@ class ChartsController(object):
     # @name : GET_CHART
     # @desc : Get chart by symbol
     def GET_CHART(self, symbol):
-        data = cherrypy.request.body.read()
-        data = json.loads(data)
-        if data['interval'] is not None:
-            interval = data['interval']
-        else:
-            interval = '1d'
-        if data['rg'] is not None:
-            rg = data['rg']
-        else:
-            rg = '5m'
+        #data = cherrypy.request.body.read()
+        #data = json.loads(data)
+        #if data['interval'] is not None:
+            #interval = data['interval']
+        #else:
+        interval = '1d'
+        #if data['rg'] is not None:
+        #    rg = data['rg']
+        #else:
+        rg = '5m'
         output = { 'result': 'success' }
         try:
             chart = self.db.load_chart(symbol, interval, rg)

@@ -24,7 +24,6 @@ class TestQuotes(unittest.TestCase):
         self.assertIsNotNone(resp[stock])
 
         r = requests.get(self.QUOTES_URL)
-        print(r.content.decode('utf-8'))
         self.assertTrue(self.is_json(r.content.decode('utf-8')))
         resp = json.loads(r.content.decode('utf-8'))
         self.assertIsNotNone(resp['result'])
