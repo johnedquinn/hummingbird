@@ -27,6 +27,7 @@ class QuotesController(object):
         output = { 'result': 'success' }
         try:
             quote = self.db.get_quote(symbol)
+            print(quote)
             if quote is not None:
                 output[symbol] = quote
             else:
@@ -35,7 +36,7 @@ class QuotesController(object):
         except Exception as ex:
             output['result'] = 'error'
             output['message'] = str(ex)
-        return output
+        return json.dumps(output)
 
     # @name : GET_QUOTES
     # @desc : Gets all quotes from the database
@@ -47,4 +48,4 @@ class QuotesController(object):
         except Exception as ex:
             output['result'] = 'success'
             output['message'] = str(ex)
-        return output
+        return json.dumps(output)
