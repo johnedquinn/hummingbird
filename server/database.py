@@ -151,8 +151,10 @@ class database:
     # @desc  : return the user
     def get_user(self, uid):
         uid = int(uid)
+        print("UID ", uid)
+        print(self.users.keys())
         if uid in self.users.keys():
-            return self.users[id]
+            return self.users[uid]
         else:
             return None
     # @name : set_user

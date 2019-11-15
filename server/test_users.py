@@ -22,7 +22,6 @@ class TestUsers(unittest.TestCase):
         # self.reset_data()
         user_id = 2
         r = requests.get(self.USERS_URL + str(user_id))
-        print(r.content.decode('utf-8'))
         self.assertTrue(self.is_json(r.content.decode('utf-8')))
         resp = json.loads(r.content.decode())
         self.assertEqual(resp['name'], 'Steffi Keene')
@@ -38,29 +37,27 @@ class TestUsers(unittest.TestCase):
         data['password'] = 'psswd'
 
         r = requests.post(self.USERS_URL, data=json.dumps(data))
-        self.assertTrue(self.is_json(r.content.decode()))
-        resp = json.loads(r.content.decode())
+        self.assertTrue(self.is_json(r.content.decode('utf-8')))
+        resp = json.loads(r.content.decode('utf-8'))
         
         uid = resp['id']
         data['password'] = '123456'
         r = requests.put(self.USERS_URL + str(uid), data = json.dumps(data))
-        self.assertTrue(self.is_json(r.content.decode()))
-        resp = json.loads(r.content.decode())
+        self.assertTrue(self.is_json(r.content.decode('utf-8')))
+        resp = json.loads(r.content.decode('utf-8'))
         self.assertEqual(resp['result'], 'success')
-
         r = requests.get(self.USERS_URL + str(uid))
-        self.assertTrue(self.is_json(r.content.decode()))
-        resp = json.loads(r.content.decode())
-        self.assertEqual(resp['password'], data['password'])
+        self.assertTrue(self.is_json(r.content.decode('utf-8')))
+        resp = json.loads(r.content.decode('utf-8'))
+        self.assertEqual(resp['email'], data['email'])
         self.assertEqual(resp['name'], data['name'])
 
         r = requests.delete(self.USERS_URL + str(uid))
         self.assertTrue(self.is_json(r.content.decode()))
         resp = json.loads(r.content.decode())
-
         r = requests.post(self.USERS_URL, data=json.dumps(data))
-        self.assertTrue(self.is_json(r.content.decode()))
-        resp = json.loads(r.content.decode())
+        self.assertTrue(self.is_json(r.content.decode('utf-8')))
+        resp = json.loads(r.content.decode('utf-8'))
         self.assertEqual(resp['id'], uid)
 
 if __name__ == "__main__":

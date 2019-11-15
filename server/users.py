@@ -38,10 +38,8 @@ class UsersController(object):
     def GET_USER(self , uid):
         uid = int(uid)
         output = {'result': 'success'}
-        print("@@@ GET_USER")
         try:
             user = self.db.get_user(uid)
-            print(user)
             output['id'] = uid
             output['name'] = user['name']
             output['email'] = user['email']
@@ -59,6 +57,7 @@ class UsersController(object):
         data = cherrypy.request.body.read()
         data = json.loads(data)
         totalUsers = len(self.db.users)
+        print(data)
         try:
             output['id'] = totalUsers + 1
             output['name'] = data['name']
@@ -71,22 +70,23 @@ class UsersController(object):
 
     # @name : PUT_USER
     # @desc : Update  a user 
-    # @body : {uid, name, email, password, stocks} 
-    def PUT_USER(self):
+    # @body : {name, email, password, stocks} 
+    def PUT_USER(self, uid):
         output = {'result': 'success'}
         data = cherrypy.request.body.read()
         data = json.loads(data)
-        uid = data['uid']
+        uid = int(uid)
         try: 
             if uid not in self.db.users:
-                set_user(data['uid'], data['name'], data['email'], data['password'], data['stocks'])
+                self.db.set_user(uid, data['name'], data['email'], data['password'], data['stocks'])
             else:
                 output['result'] = 'user not found'
         except Exception as ex: 
             output['result'] = 'error'
+            output['message'] = str(ex)
         return json.dumps(output)
+         
     
-        
     # @name : DELETE_USER
     # @desc : Delete a single user 
     def DELETE_USER(self,uid):
