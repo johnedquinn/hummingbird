@@ -55,10 +55,6 @@ class TestUsers(unittest.TestCase):
         r = requests.delete(self.USERS_URL + str(uid))
         self.assertTrue(self.is_json(r.content.decode()))
         resp = json.loads(r.content.decode())
-        r = requests.post(self.USERS_URL, data=json.dumps(data))
-        self.assertTrue(self.is_json(r.content.decode('utf-8')))
-        resp = json.loads(r.content.decode('utf-8'))
-        self.assertEqual(resp['id'], uid)
 
 if __name__ == "__main__":
     unittest.main()
