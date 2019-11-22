@@ -112,17 +112,3 @@ class UsersController(object):
         except Exception as ex: 
             output['result'] = 'error'
         return json.dumps(output)
-
-    # @name : DELETE_STOCK
-    # @desc : Delete a single stock
-    # @body : user passes in body {stock}
-    '''def DELETE_STOCK(self, uid):
-    data = cherrypy.request.body.read()
-    data = json.loads(data)
-    stock = data['stock']
-        output = {'result': 'success'}
-        try: 
-            self.db.delete_stock(uid, stock)
-        except Exception as ex:
-            output['result'] = 'error'
-        return json.dumps(output)'''
