@@ -24,8 +24,8 @@ class ChartsController(object):
     # @name : GET_CHART
     # @desc : Get chart by symbol
     def GET_CHART(self, symbol):
-        interval = '1d'
-        rg = '5m'
+        interval = '3mo'
+        rg = '1wk'
         output = { 'result': 'success' }
         try:
             chart = self.db.load_chart(symbol, interval, rg)
@@ -43,6 +43,7 @@ class ChartsController(object):
         except Exception as ex:
             output['result'] = 'error'
             output['message'] = str(ex)
+            
         return json.dumps(output)
         
 # @name : main
