@@ -1,8 +1,31 @@
+var top_stocks = ['AAPL', 'MSFT', 'F', 'AMZN', 'INTC', 'C', 'E', 'O', 'GOOG',
+    'K', 'D', 'M', 'S', 'X', 'XOM', 'T', 'BABA', 'NVDA', 'DIS', 'NFLX'];
+var ts = top_stocks[Math.floor(Math.random() * top_stocks.length)];
 
+// Update stock of the day
+update_daily_stock(ts);
 
 // Update both card decks
 update_card_deck(0, "gainers");
 update_card_deck(1, "losers");
+
+// @func  : update_daily_stock
+// @desc  : load info from stock
+function update_daily_stock(s) {
+    var stock = JSON.parse(load_stock(s))[s];
+    var title = s
+    
+    var subtitle = stock["longName"];
+    var body = "";
+    body += 'Price: $' + stock["regularMarketPrice"].toFixed(2).toString();
+    body += ',  Change: ' + stock["regularMarketChangePercent"].toFixed(2).toString() + "%";
+    body += ',  Volume: ' + stock["regularMarketVolume"].toString();
+    body += ',  Region: ' + stock["region"].toString() + ",  Exchange: " + stock["exchange"].toString();    
+
+    // Create Card
+    var card = new Card("daily", title, subtitle, body);
+    document.getElementById("daily-card-deck").appendChild(document.getElementById("card_daily"));
+}
 
 // @func  : load_top_movers
 // @desc  : grab top movers

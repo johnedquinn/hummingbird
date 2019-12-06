@@ -77,8 +77,8 @@ function Div (id, className) {
 
 // @func : Card
 // @desc 
-function Card (id, title, subtitle, text) {
-    
+function Card (id, title, subtitle, text, num) {
+
     // Body Div
     var body_div = new Div("card_body_" + id, "card-body");
     
@@ -90,6 +90,15 @@ function Card (id, title, subtitle, text) {
         title_label.innerHTML = title;
         document.body.appendChild(title_label);
         body_div.appendToDiv("card_title_label_" + id);
+    }
+    if (num){
+        var num_label = document.createElement("h6");
+        num_label.setAttribute("class", "card-number");
+        num_label.setAttribute("id", "card_num_label_" + id);
+        num = "Holdings: " + num;
+        num_label.innerHTML = num;
+        document.body.appendChild(num_label);
+        body_div.appendToDiv("card_num_label_" + id);
     }
 
     // Subtitle Label
@@ -104,13 +113,18 @@ function Card (id, title, subtitle, text) {
 
     // Text Label
     if (text) {
+        var color = "text-success";
+        if (text.toString().indexOf('-') > -1) {
+            color = "text-danger";
+        }
         var text_label = document.createElement("p");
-        text_label.setAttribute("class", "card-text");
+        text_label.setAttribute("class", "card-text " + color);
         text_label.setAttribute("id", "card_text_label_" + id);
         text_label.innerHTML = text;
         document.body.appendChild(text_label);
         body_div.appendToDiv("card_text_label_" + id);
     }
+
 
     // Create Card
     var card = new Div("card_" + id, "card");
