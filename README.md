@@ -9,6 +9,8 @@ Group Members:
 ## Project Goals
 The goal of this project was to create a simulation of a stock trading platform.
 
+## Framework
+
 ### Server
 The server was initialized using CherryPy to handle client requests and return formatted data about real-time stocks. This server used RapidAPI's YahooFinance API to handle real-time data.
 
