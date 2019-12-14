@@ -1,5 +1,5 @@
 # Hummingbird
-Final Project for CSE-30332 at the University of Notre Dame.
+Final Project for CSE-30332 at the University of Notre Dame.  
 Group Members:
 - Ascolese, Emma     (emmaascolese)
 - Coco, Chad         (ccocco)
