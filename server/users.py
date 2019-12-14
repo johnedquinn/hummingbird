@@ -77,10 +77,7 @@ class UsersController(object):
         data = json.loads(data)
         uid = int(uid)
         try: 
-            if uid not in self.db.users:
-                self.db.set_user(uid, data['name'], data['email'], data['password'], data['stocks'])
-            else:
-                output['result'] = 'user not found'
+            self.db.set_user(uid, data['name'], data['email'], 'PASSWORD', data['stocks'])
         except Exception as ex: 
             output['result'] = 'error'
             output['message'] = str(ex)

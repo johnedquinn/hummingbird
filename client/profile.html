@@ -6,12 +6,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="style/profile.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </head>
 
 
 <!-- BODY OF INDEX -->
 
-<body class="bg-light">
+<body>
     <!-- NAVBAR : ACCOUNT -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
@@ -28,13 +31,53 @@
                     <a class="nav-link" href="#">Account</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <input id="input_stock" style="max-width: 300px;" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button id="search_btn" class="btn btn-outline-success my-2 my-sm-0" data-toggle="modal" data-target="#first_search_modal" onclick="stock_search()">Search</button>
         </div>
     </nav>
 
+    <!-- SEARCH RESULTS MODAL -->
+    <div class="modal fade" id="first_search_modal" tabindex="-2" role="dialog" aria-labelledby="search_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="first_search_modal_label">Search Results</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div id = "first_search_body" class="modal-body">
+            </div>
+          </div>
+        </div>
+      </div> 
+  
+      <!-- ADD STOCKS MODAL -->
+      <div class="modal fade" id="search_modal" tabindex="-1" role="dialog" aria-labelledby="search_modal_label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="search_modal_label">New message</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Amount:</label>
+                  <input type="text" class="form-control" id="amount" name="amount_input">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel Transaction</button>
+              <button type="button" id="submit_button" data-dismiss="modal" class="btn btn-primary">Purchase</button>
+            </div>
+          </div>
+        </div>
+      </div> 
+  
     <!-- SPACING -->
     <div class="col">
         <div class="row py-3"></div>
@@ -84,8 +127,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script type="text/javascript" src="scripts/charts.js"></script>
     <script type="text/javascript" src="scripts/profile_charts.js"></script>
+    <script type="text/javascript" src="scripts/profile_func.js"></script>
+    <script type="text/javascript" src="scripts/index_func.js"></script>
     <script type="text/javascript" src="scripts/profile.js"></script>
-
+    <script type="text/javascript" src="scripts/popup.js"></script>
 </body>
 
 
