@@ -2,7 +2,7 @@
 Final Project for CSE-30332 at the University of Notre Dame.  
 Group Members:
 - Ascolese, Emma     (emmaascolese)
-- Coco, Chad         (ccocco)
+- Cocco, Chad         (ccocco)
 - Keene, Stephanie   (skeene)
 - Quinn, John        (johnedquinn)
 
