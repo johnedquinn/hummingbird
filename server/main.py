@@ -32,11 +32,17 @@ def start_service():
  
     # Initialize Controllers
     chartsController = ChartsController(db=db)
+    print("@@: Chart Controller Initialized")
     moversController = MoversController(db=db)
+    print("@@: Mover Controller Initialized")
     quotesController = QuotesController(db=db)
+    print("@@: Quotes Controller Initialized")
     usersController = UsersController(db=db)
+    print("@@: Users Controller Initialized")
     resetController = ResetController(db=db)
+    print("@@: Reset Controller Initialized")
     optionsController = OptionsController()
+    print("@@@@@: All Controllers Initialized")
 
     # Connect the routes
     dispatcher.connect('c_get_chart', '/charts/:symbol', controller=chartsController, action='GET_CHART', conditions=dict(method=['GET']))
